@@ -20,7 +20,10 @@ if AUTH_TYPE == 'auth':
     from api.v1.auth.auth import Auth
     auth = Auth()
 
-EXCLUDED_PATHS = ['/api/v1/status/', '/api/v1/unauthorized/', '/api/v1/forbidden/']
+EXCLUDED_PATHS = ['/api/v1/status/',
+                  '/api/v1/unauthorized/',
+                  '/api/v1/forbidden/']
+
 
 @app.before_request
 def before_request_handler():
@@ -42,6 +45,7 @@ def not_found(error) -> str:
     """ Not found handler
     """
     return jsonify({"error": "Not found"}), 404
+
 
 @app.errorhandler(401)
 def unauthorized(error) -> str:
