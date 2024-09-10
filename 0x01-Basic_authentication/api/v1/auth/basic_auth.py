@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """This module contains a class
 that inherits from Auth class
 """
