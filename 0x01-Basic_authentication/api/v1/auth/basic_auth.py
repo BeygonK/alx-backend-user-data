@@ -36,17 +36,19 @@ class BasicAuth(Auth):
         except ValueError:
             return None
 
-    def extract_user_credentials(self,
-                                 decoded_base64_authorization_header: str)-> (str, str):
+    def extract_user_credentials(self, decoded_base64_authorization_header: str) -> (str, str):
         """Returns username and password from decoded Base64 encoded authorization header"""
         if decoded_base64_authorization_header is None:
             return None, None
         if not isinstance(decoded_base64_authorization_header, str):
             return None, None
-        parts = decoded_base64_authorization_header.split(':')
-        if len(parts) != 2:
+        parts = decoded_base64_authorization_header.split(':', 1)
+        if len(parts) >= 2:
+            username = parts[0]
+            password = parts[1]
+            return username, password
+        else:
             return None, None
-        return parts[0], parts[1]
 
     def user_object_from_credentials(self,
                                      user_email: str,
