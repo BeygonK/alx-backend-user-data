@@ -8,20 +8,25 @@ from typing import List, TypeVar
 
 class Auth:
     """This is a template for authorization"""
-    def require_auth(self,
-                     path: str,
-                     excluded_paths: List[str]) -> bool:
-        """checks if the paths is included"""
+    def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
+        """Checks if the path is included"""
         if path is None:
             return True
         if excluded_paths is None:
             return True
         if len(excluded_paths) == 0:
             return True
+
         if not path.endswith('/'):
             path += '/'
-        if path in excluded_paths:
-            return False
+
+        for excluded_path in excluded_paths:
+            if excluded_path.endswith('*'):
+                if path.startswith(excluded_path[:-1]):
+                    return False
+            elif path == excluded_path:
+                return False
+
         return True
 
     def authorization_header(self, request=None) -> str:
