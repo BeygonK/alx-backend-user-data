@@ -27,7 +27,8 @@ if AUTH_TYPE == 'session_auth':
 
 excluded = ['/api/v1/status/',
             '/api/v1/unauthorized/',
-            '/api/v1/forbidden/']
+            '/api/v1/forbidden/',
+            '/api/v1/auth_session/login/']
 
 
 @app.errorhandler(404)
