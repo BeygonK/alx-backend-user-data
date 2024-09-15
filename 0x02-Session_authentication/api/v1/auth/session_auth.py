@@ -8,6 +8,7 @@ class SessionAuth(Auth):
     """Inherits from Auth class
     and implements session authentication
     """
+    
     user_id_by_session_id = {}
 
     def create_session(self, user_id: str) -> str:
@@ -25,3 +26,11 @@ class SessionAuth(Auth):
         if session_id is not isinstance(session_id, str):
             return None
         return self.user_id_by_session_id.get(session_id)
+
+    def current_user(self, request=None):
+        """Returns the current user from the session cookie"""
+        session_cookie = self.session_cookie(request)
+        user_id = self.user_id_for_session_id(session_cookie)
+        if user_id is None:
+            return None
+        return user_id
